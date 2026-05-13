@@ -42,7 +42,7 @@ export default function AdminArea({ storeId }: { storeId: string }) {
         <div className="flex items-center gap-3">
           {store && (
             <a
-              href={store.customDomain ? `https://${store.customDomain}` : `/${store.subdomain}`}
+              href={store.customDomain && store.customDomain.includes('.') ? `https://${store.customDomain}` : `/${store.subdomain}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-gray-500 hover:text-brand transition-colors"

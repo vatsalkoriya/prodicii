@@ -97,12 +97,12 @@ export default function AdminSettings({ store, onUpdate }: Props) {
         <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
           <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Your Store URL</p>
           <a 
-            href={store.customDomain ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`} 
+            href={store.customDomain && store.customDomain.includes('.') ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="text-sm font-medium text-brand hover:underline"
           >
-            {store.customDomain ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`}
+            {store.customDomain && store.customDomain.includes('.') ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`}
           </a>
         </div>
 
