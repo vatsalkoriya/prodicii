@@ -93,8 +93,8 @@ export default function DashboardIndexPage() {
                     )}
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-white">{s.name}</p>
-                      <p className="truncate text-xs uppercase tracking-[0.18em] text-slate-500">
-                        {s.customDomain ? s.customDomain : `${s.subdomain}.${APP_HOST}`}
+                      <p className="truncate text-xs text-slate-500 mt-1">
+                        {s.customDomain ? s.customDomain : `https://${APP_HOST}/${s.subdomain}`}
                       </p>
                     </div>
                   </div>

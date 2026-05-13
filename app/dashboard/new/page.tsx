@@ -90,8 +90,9 @@ export default function NewStorePage() {
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">Subdomain</label>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Store URL Path</label>
               <div className="flex overflow-hidden rounded-2xl border border-slate-200 bg-white focus-within:ring-4 focus-within:ring-brand/10">
+                <span className="border-r border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">https://{APP_HOST}/</span>
                 <input
                   placeholder="mystore"
                   value={subdomain}
@@ -99,7 +100,6 @@ export default function NewStorePage() {
                   required
                   className="min-w-0 flex-1 px-4 py-3 text-sm text-slate-900 outline-none"
                 />
-                <span className="border-l border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-400">.{APP_HOST}</span>
               </div>
             </div>
             <div>

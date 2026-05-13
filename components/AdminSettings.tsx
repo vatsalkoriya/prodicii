@@ -93,6 +93,19 @@ export default function AdminSettings({ store, onUpdate }: Props) {
     <form onSubmit={save} className="max-w-2xl space-y-6">
       <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
         <h2 className="font-semibold text-gray-900">General</h2>
+        
+        <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Your Store URL</p>
+          <a 
+            href={store.customDomain ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-sm font-medium text-brand hover:underline"
+          >
+            {store.customDomain ? `https://${store.customDomain}` : `https://${APP_HOST}/${store.subdomain}`}
+          </a>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Store Name</label>
           <input value={form.name} onChange={(e) => set('name', e.target.value)} required className={inputClass} />
