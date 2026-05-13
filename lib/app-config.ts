@@ -1,4 +1,4 @@
-const DEFAULT_APP_URL = 'https://prodicci.vercel.app';
+const DEFAULT_APP_URL = 'https://prodicii.vercel.app';
 
 function sanitizeUrl(u: string) {
 	return u.replace(/\/$/, '');
