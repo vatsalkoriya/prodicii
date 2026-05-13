@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'This UTR has already been used' }, { status: 409 });
 
   order.utr = utr.toUpperCase();
-  order.screenshotUrl = screenshotUrl || null;
+  order.screenshotUrl = screenshotUrl ?? undefined;
   order.status = 'payment_submitted';
   await order.save();
 

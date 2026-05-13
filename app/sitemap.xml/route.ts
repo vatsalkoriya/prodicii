@@ -4,10 +4,16 @@ import Product from '../../models/Product';
 import { APP_URL } from '../../lib/app-config';
 
 export async function GET() {
-  await connect();
-
-  const stores = await Store.find({ isActive: true }).select('subdomain updatedAt');
-  const products = await Product.find({ isActive: true }).select('slug storeId updatedAt').populate('storeId', 'subdomain');
+  let stores: any[] = [];
+  let products: any[] = [];
+  try {
+    await connect();
+    stores = await Store.find({ isActive: true }).select('subdomain updatedAt');
+    products = await Product.find({ isActive: true }).select('slug storeId updatedAt').populate('storeId', 'subdomain');
+  } catch (err) {
+    console.warn('Sitemap generation: DB unavailable, falling back to minimal sitemap', err);
+    // Proceed with empty lists so build/prerender won't fail when DB is not reachable
+  }
 
   const urls: string[] = [
     `<url><loc>${APP_URL}</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`,
@@ -17,7 +23,7 @@ export async function GET() {
 
   for (const s of stores) {
     urls.push(
-      `<url><loc>${APP_URL}/${s.subdomain}</loc><lastmod>${new Date(s.updatedAt as any).toISOString()}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`
+      `<url><loc>${APP_URL}/${s.subdomain}</loc><lastmod>${new Date((s as any).updatedAt).toISOString()}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`
     );
   }
 
@@ -25,7 +31,7 @@ export async function GET() {
     const subdomain = (p.storeId as any)?.subdomain;
     if (!subdomain) continue;
     urls.push(
-      `<url><loc>${APP_URL}/${subdomain}/product/${p.slug}</loc><lastmod>${new Date(p.updatedAt as any).toISOString()}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`
+      `<url><loc>${APP_URL}/${subdomain}/product/${p.slug}</loc><lastmod>${new Date((p as any).updatedAt).toISOString()}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`
     );
   }
 

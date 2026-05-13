@@ -39,7 +39,7 @@ export async function GET(req: Request) {
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const recentOrders = orders.filter(
-    (o) => o.status === 'payment_verified' && new Date(o.createdAt as any) >= sevenDaysAgo
+    (o) => o.status === 'payment_verified' && new Date((o as any).createdAt) >= sevenDaysAgo
   );
 
   const dailyRevenue: Record<string, number> = {};
@@ -49,8 +49,8 @@ export async function GET(req: Request) {
     dailyRevenue[key] = 0;
   }
   for (const o of recentOrders) {
-    const key = new Date(o.createdAt as any).toISOString().slice(0, 10);
-    if (key in dailyRevenue) dailyRevenue[key] += o.totalAmount;
+    const key = new Date((o as any).createdAt).toISOString().slice(0, 10);
+    if (key in dailyRevenue) dailyRevenue[key] += (o as any).totalAmount || 0;
   }
 
   return NextResponse.json({
