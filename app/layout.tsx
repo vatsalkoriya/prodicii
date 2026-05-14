@@ -17,11 +17,6 @@ export const metadata: Metadata = {
   title: { default: 'prodicii', template: '%s | prodicii' },
   description: 'Create your online store and accept UPI payments - built for Indian sellers.',
   metadataBase: new URL(APP_URL),
-  icons: {
-    icon: [],
-    apple: [],
-    shortcut: [],
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
