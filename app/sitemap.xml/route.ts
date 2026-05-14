@@ -2,6 +2,7 @@ import { connect } from '../../lib/mongodb';
 import Store from '../../models/Store';
 import Product from '../../models/Product';
 import { APP_URL } from '../../lib/app-config';
+import { NextRequest } from 'next/server';
 
 function escapeXml(unsafe: string) {
   return unsafe.replace(/[<>&'"]/g, (c) => {
@@ -26,7 +27,7 @@ function formatDate(date: any) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   let stores: any[] = [];
   let products: any[] = [];
   
@@ -41,7 +42,9 @@ export async function GET() {
     console.error('Sitemap generation DB error:', err);
   }
 
-  const baseUrl = APP_URL.replace(/\/$/, '');
+  const host = req.headers.get('host');
+  const protocol = req.headers.get('x-forwarded-proto') || 'https';
+  const baseUrl = host ? `${protocol}://${host}` : APP_URL.replace(/\/$/, '');
 
   const urls: string[] = [
     `<url><loc>${baseUrl}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`,

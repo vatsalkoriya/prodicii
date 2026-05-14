@@ -1,7 +1,11 @@
 import { APP_URL } from '../../lib/app-config';
+import { NextRequest } from 'next/server';
 
-export function GET() {
-  const baseUrl = APP_URL.replace(/\/$/, '');
+export function GET(req: NextRequest) {
+  const host = req.headers.get('host');
+  const protocol = req.headers.get('x-forwarded-proto') || 'https';
+  const baseUrl = host ? `${protocol}://${host}` : APP_URL.replace(/\/$/, '');
+  
   const body = `User-agent: *
 Allow: /
 Disallow: /api/
