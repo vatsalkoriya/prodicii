@@ -1,4 +1,5 @@
-import { connect } from '../../lib/mongodb';
+// sitemap route removed; static sitemap is served from public folder
+
 import Store from '../../models/Store';
 import Product from '../../models/Product';
 import { APP_URL } from '../../lib/app-config';
