@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://prodicii.vercel.app/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://prodicii.vercel.app/auth/login</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://prodicii.vercel.app/auth/register</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://prodicii.vercel.app/vikkdwadw</loc>
+    <lastmod>2026-05-13T19:33:13.806Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://prodicii.vercel.app/vikkdwadw/product/capcut-link</loc>
+    <lastmod>2026-05-13T20:01:09.638Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://prodicii.vercel.app/vikkdwadw/product/capcut-pro</loc>
+    <lastmod>2026-05-13T20:06:18.427Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
