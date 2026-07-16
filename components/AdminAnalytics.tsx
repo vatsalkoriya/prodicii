@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Stats {
   totalOrders: number;
@@ -26,18 +27,60 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 export default function AdminAnalytics({ storeId }: { storeId: string }) {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    fetch(`/api/admin/analytics?storeId=${storeId}`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((r) => r.json())
-      .then((j) => { setStats(j); setLoading(false); });
-  }, [storeId]);
+    let active = true;
+
+    async function loadAnalytics() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.replace('/auth/login');
+        return;
+      }
+
+      const res = await fetch(`/api/admin/analytics?storeId=${storeId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem('token');
+        router.replace('/auth/login');
+        return;
+      }
+
+      const j = await res.json();
+      if (!active) return;
+
+      if (!res.ok) {
+        setError(j.error || 'Failed to load analytics');
+        setLoading(false);
+        return;
+      }
+
+      setStats(j);
+      setLoading(false);
+    }
+
+    loadAnalytics().catch(() => {
+      if (active) {
+        setError('Failed to load analytics');
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [router, storeId]);
 
   if (loading) return <div className="text-gray-400 py-10 text-center">Loading analytics...</div>;
+  if (error) return <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>;
   if (!stats) return null;
 
-  const maxRevenue = Math.max(...Object.values(stats.dailyRevenue), 1);
+  const dailyRevenue = stats.dailyRevenue || {};
+  const maxRevenue = Math.max(...Object.values(dailyRevenue), 1);
 
   return (
     <div className="space-y-6">
@@ -71,7 +114,7 @@ export default function AdminAnalytics({ storeId }: { storeId: string }) {
       <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
         <h3 className="text-sm font-semibold text-gray-700 mb-4">Revenue — Last 7 Days</h3>
         <div className="flex items-end gap-2 h-32">
-          {Object.entries(stats.dailyRevenue).map(([date, rev]) => (
+          {Object.entries(dailyRevenue).map(([date, rev]) => (
             <div key={date} className="flex-1 flex flex-col items-center gap-1">
               <span className="text-xs text-gray-400">{rev > 0 ? `₹${rev}` : ''}</span>
               <div

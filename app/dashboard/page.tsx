@@ -10,17 +10,42 @@ export default function DashboardIndexPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/auth/login');
-      return;
-    }
-    fetch('/api/stores', { headers: { Authorization: `Bearer ${token}` } })
-      .then((r) => r.json())
-      .then((j) => {
+    let active = true;
+
+    async function loadStores() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        if (active) setLoading(false);
+        router.replace('/auth/login');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/stores', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 401) {
+          localStorage.removeItem('token');
+          router.replace('/auth/login');
+          return;
+        }
+
+        const j = await res.json();
+        if (!active) return;
         setStores(j.stores || []);
-        setLoading(false);
-      });
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadStores().catch(() => {
+      if (active) setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
   }, [router]);
 
   if (loading) {

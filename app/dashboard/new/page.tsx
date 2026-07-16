@@ -23,7 +23,8 @@ export default function NewStorePage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/auth/login');
+      setLoading(false);
+      router.replace('/auth/login');
       return;
     }
 
@@ -34,6 +35,12 @@ export default function NewStorePage() {
     });
     const j = await res.json();
     setLoading(false);
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      setLoading(false);
+      router.replace('/auth/login');
+      return;
+    }
     if (j.ok) {
       router.push(`/dashboard/${j.storeId}`);
     } else {

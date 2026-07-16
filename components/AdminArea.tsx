@@ -12,15 +12,52 @@ type Tab = 'analytics' | 'products' | 'orders' | 'settings';
 export default function AdminArea({ storeId }: { storeId: string }) {
   const [tab, setTab] = useState<Tab>('analytics');
   const [store, setStore] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) { router.push('/auth/login'); return; }
-    fetch(`/api/admin/stores/${storeId}`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((r) => r.json())
-      .then((j) => { if (j.store) setStore(j.store); else router.push('/dashboard'); });
-  }, [storeId]);
+    let active = true;
+
+    async function loadStore() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.replace('/auth/login');
+        return;
+      }
+
+      const res = await fetch(`/api/admin/stores/${storeId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem('token');
+        router.replace('/auth/login');
+        return;
+      }
+
+      if (res.status === 403 || res.status === 404) {
+        router.replace('/dashboard');
+        return;
+      }
+
+      const j = await res.json();
+      if (!active) return;
+      if (j.store) {
+        setStore(j.store);
+      } else {
+        router.replace('/dashboard');
+      }
+      setLoading(false);
+    }
+
+    loadStore().catch(() => {
+      if (active) setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [router, storeId]);
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'analytics', label: 'Analytics' },
@@ -75,10 +112,18 @@ export default function AdminArea({ storeId }: { storeId: string }) {
           ))}
         </div>
 
-        {tab === 'analytics' && <AdminAnalytics storeId={storeId} />}
-        {tab === 'products' && <AdminProductForm storeId={storeId} />}
-        {tab === 'orders' && <AdminOrders storeId={storeId} />}
-        {tab === 'settings' && store && <AdminSettings store={store} onUpdate={setStore} />}
+        {loading ? (
+          <div className="rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center text-gray-400">
+            Loading store workspace...
+          </div>
+        ) : (
+          <>
+            {tab === 'analytics' && <AdminAnalytics storeId={storeId} />}
+            {tab === 'products' && <AdminProductForm storeId={storeId} />}
+            {tab === 'orders' && <AdminOrders storeId={storeId} />}
+            {tab === 'settings' && store && <AdminSettings store={store} onUpdate={setStore} />}
+          </>
+        )}
       </div>
     </div>
   );

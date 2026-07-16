@@ -36,11 +36,16 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const payload = authFromRequest(req);
+  const hasAuthHeader = Boolean(req.headers.get('authorization'));
   await connect();
 
   if (payload) {
     const stores = await Store.find({ ownerId: payload.userId }).sort({ createdAt: -1 });
     return NextResponse.json({ stores });
+  }
+
+  if (hasAuthHeader) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   // Public: return minimal store list for homepage
