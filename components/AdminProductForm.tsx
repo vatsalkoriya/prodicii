@@ -77,31 +77,34 @@ export default function AdminProductForm({ storeId }: { storeId: string }) {
   }
 
   async function uploadImage(file: File): Promise<string> {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Session expired. Please sign in again.');
     const fd = new FormData();
     fd.append('file', file);
-    const token = localStorage.getItem('token');
     const res = await fetch('/api/uploads/image', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: fd,
     });
     const j = await res.json();
+    if (res.status === 401) throw new Error('Session expired. Please sign in again.');
+    if (!res.ok) throw new Error(j.error || 'Image upload failed');
     return j.url;
   }
 
   async function uploadAttachment(file: File): Promise<ProductAttachment> {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Session expired. Please sign in again.');
     const fd = new FormData();
     fd.append('file', file);
-    const token = localStorage.getItem('token');
     const res = await fetch('/api/uploads/file', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: fd,
     });
     const j = await res.json();
-    if (!res.ok || !j.file) {
-      throw new Error(j.error || 'Attachment upload failed');
-    }
+    if (res.status === 401) throw new Error('Session expired. Please sign in again.');
+    if (!res.ok || !j.file) throw new Error(j.error || 'Attachment upload failed');
     return j.file;
   }
 
@@ -111,6 +114,11 @@ export default function AdminProductForm({ storeId }: { storeId: string }) {
     setMessage('');
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        setMessage('Session expired. Please sign in again.');
+        setLoading(false);
+        return;
+      }
 
       let imageUrl: string | undefined;
       if (imageFile) imageUrl = await uploadImage(imageFile);

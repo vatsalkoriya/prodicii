@@ -14,7 +14,8 @@ export function signToken(payload: TokenPayload): string {
 export function verifyToken(token: string): TokenPayload | null {
   try {
     return jwt.verify(token, JWT_SECRET!) as TokenPayload;
-  } catch {
+  } catch (error: any) {
+    console.error('[verifyToken] JWT verification failed:', error?.message || error);
     return null;
   }
 }
@@ -22,7 +23,13 @@ export function verifyToken(token: string): TokenPayload | null {
 /** Extract and verify Bearer token from Authorization header */
 export function authFromRequest(req: Request): TokenPayload | null {
   const auth = req.headers.get('authorization') || '';
+  console.log('[authFromRequest] Authorization header value:', auth ? `Bearer ${auth.slice(0, 15)}...` : '(empty)');
   const token = auth.replace(/^Bearer\s+/i, '').trim();
-  if (!token) return null;
-  return verifyToken(token);
+  if (!token) {
+    console.log('[authFromRequest] Token is empty after processing Bearer prefix');
+    return null;
+  }
+  const verified = verifyToken(token);
+  console.log('[authFromRequest] Token verification result:', verified ? 'SUCCESS' : 'FAILED');
+  return verified;
 }

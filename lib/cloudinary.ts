@@ -9,11 +9,12 @@ cloudinary.config({
 /** Upload a Buffer or base64 string to Cloudinary and return the secure URL */
 export async function uploadImage(
   source: Buffer | string,
-  folder = 'prodicii'
+  folder = 'prodicii',
+  mimeType = 'image/webp'
 ): Promise<string> {
   const input =
     Buffer.isBuffer(source)
-      ? `data:image/webp;base64,${source.toString('base64')}`
+      ? `data:${mimeType};base64,${source.toString('base64')}`
       : source;
 
   const result = await cloudinary.uploader.upload(input, {

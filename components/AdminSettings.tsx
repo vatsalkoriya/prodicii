@@ -32,6 +32,11 @@ export default function AdminSettings({ store, onUpdate }: Props) {
     setUploadingBanner(true);
     setMessage('');
     const token = localStorage.getItem('token');
+    if (!token) {
+      setUploadingBanner(false);
+      setMessage('Session expired. Please sign in again.');
+      return;
+    }
     const fd = new FormData();
     fd.append('file', file);
 
@@ -42,6 +47,11 @@ export default function AdminSettings({ store, onUpdate }: Props) {
     });
     const j = await res.json();
     setUploadingBanner(false);
+
+    if (res.status === 401) {
+      setMessage('Session expired. Please sign in again.');
+      return;
+    }
 
     if (j.ok && j.url) {
       set('bannerImage', j.url);
