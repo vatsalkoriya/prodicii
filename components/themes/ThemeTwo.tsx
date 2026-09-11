@@ -6,8 +6,8 @@ export default function ThemeTwo({ store, products, sections }: any) {
   const featured = products.filter((p: any) => p.isFeatured);
 
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b border-white/10 bg-[#060f0d] px-4 py-20">
+    <div className="storefront-page storefront-theme-two min-h-screen">
+      <section className="storefront-hero relative overflow-hidden px-4 py-24">
         {store.bannerImage && (
           <>
             <img
@@ -21,8 +21,8 @@ export default function ThemeTwo({ store, products, sections }: any) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/60 to-transparent" />
         <div className="relative mx-auto grid max-w-screen-2xl items-center gap-10 sm:px-2 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-brand">Bold layout</p>
-            <h1 className="mt-3 text-5xl font-bold text-white sm:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
+            <p className="app-eyebrow">Bold layout</p>
+            <h1 className="app-title mt-3 text-5xl sm:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
               {store.name}
             </h1>
             <p className="mt-5 max-w-xl text-base leading-8 text-slate-300">
@@ -54,13 +54,13 @@ export default function ThemeTwo({ store, products, sections }: any) {
         </div>
       </section>
 
-      <div className="mx-auto max-w-screen-2xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="app-shell space-y-16 px-4 py-14 sm:px-6 lg:px-8">
         {featured.length > 0 && (
           <section>
             <div className="mb-5 flex items-end justify-between gap-4">
               <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Top picks</p>
-                <h2 className="mt-2 text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
+                <p className="app-eyebrow">Top picks</p>
+                <h2 className="storefront-section-title mt-2">
                   Featured collection
                 </h2>
               </div>
@@ -76,8 +76,8 @@ export default function ThemeTwo({ store, products, sections }: any) {
         <section>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Browse</p>
-              <h2 className="mt-2 text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
+              <p className="app-eyebrow">Browse</p>
+              <h2 className="storefront-section-title mt-2">
                 All products
               </h2>
             </div>

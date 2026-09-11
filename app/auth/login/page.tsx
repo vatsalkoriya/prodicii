@@ -30,7 +30,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="grid min-h-screen items-center px-4 py-10 sm:px-6">
+    <div className="app-page grid min-h-screen items-center px-4 py-10 sm:px-6">
       <div className="mx-auto grid w-full max-w-screen-2xl gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
         <div className="surface hidden overflow-hidden rounded-[2.2rem] p-8 lg:block">
           <p className="section-label">Seller workspace</p>
@@ -72,7 +72,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="surface-light mx-auto w-full max-w-md rounded-[2.2rem] p-8 sm:p-9">
+        <div className="app-panel-light mx-auto w-full max-w-md p-8 sm:p-9">
           <Link href="/" className="block text-xl font-bold text-brand" style={{ fontFamily: 'var(--font-display)' }}>
             prodicii
           </Link>
@@ -94,7 +94,7 @@ export default function LoginPage() {
               <label className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
               <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required className="field" />
             </div>
-            <button type="submit" disabled={loading} className="shine w-full rounded-2xl bg-brand py-3 text-base font-semibold text-[var(--brand-ink)] transition hover:bg-[#52e09d] disabled:opacity-60">
+            <button type="submit" disabled={loading} className="app-button app-button-primary w-full disabled:opacity-60">
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>

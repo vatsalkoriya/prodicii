@@ -49,17 +49,17 @@ export default function NewStorePage() {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-white/10 bg-[#081310]/80 backdrop-blur-xl">
-        <div className="mx-auto max-w-screen-2xl px-4 py-4 sm:px-6 lg:px-8">
+    <div className="app-page min-h-screen">
+      <header className="app-header">
+        <div className="app-shell px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/dashboard" className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
             prodicii
           </Link>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-screen-2xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-        <div className="surface rounded-[2rem] p-8">
+      <div className="app-shell grid gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div className="app-panel rounded-[1.15rem] p-8">
           <p className="text-sm uppercase tracking-[0.22em] text-brand">Quick setup</p>
           <h1 className="mt-3 text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
             Open a new store in a few steps.
@@ -77,7 +77,7 @@ export default function NewStorePage() {
           </div>
         </div>
 
-        <form onSubmit={submit} className="surface-light rounded-[2rem] p-8">
+        <form onSubmit={submit} className="app-panel-light rounded-[1.15rem] p-8">
           <h2 className="text-2xl font-bold text-slate-950">Store details</h2>
           <p className="mt-2 text-sm text-slate-500">You can refine branding, products, and domain settings after creation.</p>
 
@@ -121,7 +121,7 @@ export default function NewStorePage() {
             <button
               type="submit"
               disabled={loading}
-              className="shine w-full rounded-2xl bg-brand py-3 text-base font-semibold text-[var(--brand-ink)] transition hover:bg-[#52e09d] disabled:opacity-60"
+              className="app-button app-button-primary w-full disabled:opacity-60"
             >
               {loading ? 'Creating store...' : 'Create store'}
             </button>

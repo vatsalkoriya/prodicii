@@ -54,10 +54,10 @@ export default async function ProductPage({ params }: Props) {
   return (
     <main>
       <Header storeName={store?.name} />
-      <div className="mx-auto max-w-screen-2xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="storefront-page app-shell px-4 py-20 sm:px-6 lg:px-8">
         {product ? (
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="surface rounded-[2rem] p-4">
+            <div className="app-panel rounded-[1.15rem] p-4">
               <div className="aspect-square overflow-hidden rounded-[1.5rem] bg-white/5">
                 {product.image ? (
                   <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
 
             <div className="space-y-6">
-              <div className="surface rounded-[2rem] p-8">
+              <div className="app-panel rounded-[1.15rem] p-8">
                 {product.category && (
                   <span className="text-xs font-semibold uppercase tracking-[0.24em] text-brand">{product.category}</span>
                 )}
@@ -97,7 +97,7 @@ export default async function ProductPage({ params }: Props) {
               </div>
 
               {(product.attachments?.length > 0 || product.externalLinks?.length > 0) && (
-                <div className="surface rounded-[2rem] p-6">
+                <div className="app-panel rounded-[1.15rem] p-6">
                   <h2 className="text-lg font-semibold text-white">Files and Links</h2>
                   <p className="mt-2 text-sm text-slate-400">Download product resources or open the provided reference links.</p>
                   <div className="mt-5 space-y-3">

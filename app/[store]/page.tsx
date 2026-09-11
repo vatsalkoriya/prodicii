@@ -9,15 +9,23 @@ import { storeJsonLd } from '../../lib/seo';
 import { APP_URL } from '../../lib/app-config';
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { unstable_cache } from 'next/cache';
 
 interface Props {
   params: { store: string };
 }
 
+const getStoreBySubdomain = unstable_cache(
+  async (subdomain: string) => {
+    await connect();
+    return Store.findOne({ subdomain, isActive: true }).lean();
+  },
+  ['store-by-subdomain'],
+  { revalidate: 60 },
+);
+
 async function resolveStore(storeParam: string) {
-  await connect();
-  // Try subdomain first
-  let store = await Store.findOne({ subdomain: storeParam, isActive: true }).lean();
+  let store = await getStoreBySubdomain(storeParam);
   if (store) return store;
 
   // Try custom domain (injected by middleware)

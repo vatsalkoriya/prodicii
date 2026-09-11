@@ -67,13 +67,13 @@ export default function AdminArea({ storeId }: { storeId: string }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="admin-page min-h-screen">
       {/* Top bar */}
-      <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+      <header className="admin-topbar flex items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center gap-4">
-          <Link href="/dashboard" className="text-brand font-bold text-lg">prodicii</Link>
+          <Link href="/dashboard" className="text-lg font-bold text-slate-900">prodicii</Link>
           {store && (
-            <span className="text-gray-400 text-sm hidden sm:block">/ {store.name}</span>
+            <span className="admin-muted hidden text-sm sm:block">/ {store.name}</span>
           )}
         </div>
         <div className="flex items-center gap-3">
@@ -82,29 +82,29 @@ export default function AdminArea({ storeId }: { storeId: string }) {
               href={store.customDomain && store.customDomain.includes('.') ? `https://${store.customDomain}` : `/${store.subdomain}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-brand transition-colors"
+              className="admin-muted text-sm transition-colors hover:text-slate-900"
             >
               View store ↗
             </a>
           )}
           <button
             onClick={() => { localStorage.removeItem('token'); router.push('/auth/login'); }}
-            className="text-sm text-gray-500 hover:text-gray-700"
+            className="admin-muted text-sm transition-colors hover:text-slate-900"
           >
             Sign out
           </button>
         </div>
       </header>
 
-      <div className="max-w-screen-2xl mx-auto px-4 py-8 lg:px-8">
+      <div className="app-shell px-4 py-8 lg:px-8">
         {/* Tab nav */}
-        <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit mb-8">
+        <div className="mb-8 flex w-fit gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                tab === t.id ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              className={`admin-tab rounded-lg px-5 py-2 text-sm font-medium transition-colors ${
+                tab === t.id ? 'admin-tab-active' : ''
               }`}
             >
               {t.label}
@@ -113,7 +113,7 @@ export default function AdminArea({ storeId }: { storeId: string }) {
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center text-gray-400">
+          <div className="admin-panel px-6 py-10 text-center text-slate-400">
             Loading store workspace...
           </div>
         ) : (

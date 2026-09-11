@@ -73,7 +73,7 @@ export default function CheckoutClient({ upiLink, qrDataUrl, productId, amount, 
 
   if (step === 'done') {
     return (
-      <div className="surface rounded-[2rem] p-8 text-center">
+      <div className="app-panel rounded-[1.15rem] p-8 text-center">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-400/10 text-2xl text-brand">OK</div>
         <h2 className="mt-5 text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           Payment submitted
@@ -86,7 +86,7 @@ export default function CheckoutClient({ upiLink, qrDataUrl, productId, amount, 
   }
 
   return (
-    <div className="surface rounded-[2rem] p-6">
+    <div className="app-panel rounded-[1.15rem] p-6">
       <div className="mb-6 flex items-center justify-between gap-3">
         {steps.map(([index, label]) => {
           const active = (step === 'pay' && index === '1') || (step === 'confirm' && index === '2');
@@ -137,14 +137,14 @@ export default function CheckoutClient({ upiLink, qrDataUrl, productId, amount, 
           <div className="flex flex-col gap-3">
             <a
               href={upiLink}
-              className="rounded-2xl bg-brand py-3 text-center text-base font-semibold text-[var(--brand-ink)] transition hover:bg-[#52e09d]"
+              className="app-button app-button-primary w-full"
             >
               Open UPI app - Pay Rs {amount}
             </a>
             <button
               onClick={createOrder}
               disabled={loading}
-              className="rounded-2xl border border-white/10 bg-white/5 py-3 text-base font-semibold text-white transition hover:bg-white/10 disabled:opacity-60"
+              className="app-button app-button-ghost w-full disabled:opacity-60"
             >
               {loading ? 'Creating order...' : "I've paid - enter UTR"}
             </button>
@@ -188,7 +188,7 @@ export default function CheckoutClient({ upiLink, qrDataUrl, productId, amount, 
           <button
             type="submit"
             disabled={loading || !utr}
-            className="shine w-full rounded-2xl bg-brand py-3 text-base font-semibold text-[var(--brand-ink)] transition hover:bg-[#52e09d] disabled:opacity-60"
+            className="app-button app-button-primary w-full disabled:opacity-60"
           >
             {loading ? 'Submitting...' : 'Submit payment proof'}
           </button>

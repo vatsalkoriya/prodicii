@@ -30,9 +30,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="grid min-h-screen items-center px-4 py-10 sm:px-6">
+    <div className="app-page grid min-h-screen items-center px-4 py-10 sm:px-6">
       <div className="mx-auto grid w-full max-w-screen-2xl gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
-        <div className="surface-light order-2 mx-auto w-full max-w-md rounded-[2.2rem] p-8 sm:p-9 lg:order-1">
+        <div className="app-panel-light order-2 mx-auto w-full max-w-md p-8 sm:p-9 lg:order-1">
           <Link href="/" className="block text-xl font-bold text-brand" style={{ fontFamily: 'var(--font-display)' }}>
             prodicii
           </Link>
@@ -54,7 +54,7 @@ export default function RegisterPage() {
               <label className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
               <input type="password" placeholder="Minimum 8 characters" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} className="field" />
             </div>
-            <button type="submit" disabled={loading} className="shine w-full rounded-2xl bg-brand py-3 text-base font-semibold text-[var(--brand-ink)] transition hover:bg-[#52e09d] disabled:opacity-60">
+            <button type="submit" disabled={loading} className="app-button app-button-primary w-full disabled:opacity-60">
               {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>

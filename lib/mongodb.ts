@@ -25,6 +25,9 @@ export async function connect(): Promise<typeof mongoose> {
     cache.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
       maxPoolSize: 10,
+      maxIdleTimeMS: 30000,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
     }).catch((err) => {
       // surface a clearer error in server logs
       // eslint-disable-next-line no-console

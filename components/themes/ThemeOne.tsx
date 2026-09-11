@@ -6,8 +6,8 @@ export default function ThemeOne({ store, products, sections }: any) {
   const featured = products.filter((p: any) => p.isFeatured);
 
   return (
-    <div className="min-h-screen">
-      <section className="grid-glow relative overflow-hidden px-4 py-20 text-center">
+    <div className="storefront-page storefront-theme-one min-h-screen">
+      <section className="storefront-hero grid-glow relative overflow-hidden px-4 py-24 text-center">
         {store.bannerImage && (
           <>
             <img
@@ -21,8 +21,8 @@ export default function ThemeOne({ store, products, sections }: any) {
         {store.logo && (
           <img src={store.logo} alt={store.name} className="relative mx-auto mb-5 h-20 w-20 rounded-[1.5rem] object-cover shadow-lg" />
         )}
-        <p className="relative text-sm uppercase tracking-[0.22em] text-brand">Curated storefront</p>
-        <h1 className="relative mt-3 text-5xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
+        <p className="app-eyebrow relative">Curated storefront</p>
+        <h1 className="app-title relative mt-3 text-5xl" style={{ fontFamily: 'var(--font-display)' }}>
           {store.name}
         </h1>
         <p className="relative mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-300">
@@ -39,13 +39,13 @@ export default function ThemeOne({ store, products, sections }: any) {
         </div>
       </section>
 
-      <div className="mx-auto max-w-screen-2xl space-y-12 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="app-shell space-y-16 px-4 py-14 sm:px-6 lg:px-8">
         {featured.length > 0 && (
           <section>
             <div className="mb-5 flex items-end justify-between gap-4">
               <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Highlights</p>
-                <h2 className="mt-2 text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
+                <p className="app-eyebrow">Highlights</p>
+                <h2 className="storefront-section-title mt-2">
                   Featured products
                 </h2>
               </div>
@@ -61,8 +61,8 @@ export default function ThemeOne({ store, products, sections }: any) {
         <section>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Catalog</p>
-              <h2 className="mt-2 text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
+              <p className="app-eyebrow">Catalog</p>
+              <h2 className="storefront-section-title mt-2">
                 All products
               </h2>
             </div>

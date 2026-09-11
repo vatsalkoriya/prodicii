@@ -38,9 +38,9 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
   const qrDataUrl = upiLink ? await generateQrDataUrl(upiLink) : null;
 
   return (
-    <main className="min-h-screen bg-[#040A09]">
+    <main className="checkout-page min-h-screen">
       <Header storeName={store.name} />
-      <div className="mx-auto grid max-w-screen-xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
+      <div className="app-shell grid gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
         
         {/* Left Column: Order Summary */}
         <div className="flex flex-col">
@@ -54,7 +54,7 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
               : 'Pay directly via UPI, then submit your payment proof for quick verification.'}
           </p>
 
-          <div className="mt-10 rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.02] p-8 shadow-2xl">
+          <div className="checkout-summary mt-10 rounded-[1.15rem] p-8 shadow-2xl">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 mb-6">Order summary</h2>
             <div className="flex items-center gap-5">
               {product.image ? (
